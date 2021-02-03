@@ -1,3 +1,2 @@
-- show platform
-- show environment
-- show hw-module subslot all sensors
+- show version
+- show clock

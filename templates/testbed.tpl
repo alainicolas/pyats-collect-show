@@ -1,23 +1,35 @@
 testbed:
-  name: ASR900
+  name: NXOS
   credentials:
     default:
-      username: cisco
-      password: cisco
-    enable:
-      password: cisco
+      username: tonuser
+      password: tonpass
       
 devices:
+  vps:
+    os: linux
+    type: linux
+    credentials:
+      default:
+        username: tonuser
+    connections:
+      cli:
+        protocol: ssh
+        ip: IP-REBOND
 {% for ip, id in list_ip_id %}
-  ASR900_{{id}}:
-    type: iosxe
-    os: iosxe
+  NXOS_{{id}}:
+    type: router
+    os: nxos
     connections:
       vty:
-        protocol: telnet
+        protocol: ssh
         ip: {{ip}}
         settings:
           GRACEFUL_DISCONNECT_WAIT_SEC: 0
           POST_DISCONNECT_WAIT_SEC: 0
+          EXEC_TIMEOUT: 120
+          CONFIG_TIMEOUT: 120
+        port: 22
+        proxy:
+            - device: vps
 {% endfor %}
-
